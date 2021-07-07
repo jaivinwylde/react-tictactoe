@@ -7,7 +7,6 @@ const Cell = styled.button`
 
   width: ${props => props.scale}rem;
   height: ${props => props.scale}rem;
-  // border: 0.15rem #2e2e2e solid;
   border: 0;
   margin: 0;
   padding: 0;
@@ -39,8 +38,10 @@ const GameBoard = styled.div`
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+
   height: 100vh;
+
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `
@@ -68,6 +69,7 @@ function Board() {
   const [cells, setCells] = useState(generateBoard(gridSize))
   const [turn, setTurn] = useState(true)
   const [winner, setWinner] = useState(null)
+  const [moves, setMoves] = useState(0)
 
   useEffect(() => {
     // Check for a winner
@@ -75,7 +77,7 @@ function Board() {
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
-      [0, 3, 7],
+      [0, 3, 6],
       [1, 4, 7],
       [2, 5, 8],
       [0, 4, 8],
@@ -91,7 +93,6 @@ function Board() {
 
       const currentState = getState(row[0])
 
-      console.log(currentState)
       if (
         currentState &&
         currentState === getState(row[1]) &&
@@ -107,6 +108,7 @@ function Board() {
     setCells(generateBoard(gridSize))
     setTurn(true)
     setWinner(null)
+    setMoves(0)
   }
 
   const handleCellClick = cellId => {
@@ -121,15 +123,25 @@ function Board() {
       cellState = "O"
     }
 
+    setMoves(moves + 1)
+
     setCells({ ...cells, [cellId]: { cellState } })
     setTurn(!turn)
   }
 
+  const renderInfoMessage = () => {
+    if (winner) {
+      return `${winner} has won!`
+    } else if (moves === gridSize * 3) {
+      return "It's a tie!"
+    } else {
+      return `It's ${turn ? "X" : "O"}'s turn`
+    }
+  }
+
   return (
     <Container>
-      <h3>
-        {winner ? `${winner} has won!` : `It's ${turn ? "X" : "O"}'s turn`}
-      </h3>
+      <h3>{renderInfoMessage()}</h3>
       <GameBoard scale={scale} grid={gridSize}>
         {Object.keys(cells).map(cell => {
           cell = parseInt(cell)

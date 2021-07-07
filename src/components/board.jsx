@@ -163,7 +163,13 @@ function Board() {
           )
         })}
       </GameBoard>
-      <input type="number" value={scale} onChange={handleScaleInput} />
+      <input
+        type="range"
+        min="1"
+        max="15"
+        value={scale}
+        onChange={handleScaleInput}
+      />
       <button onClick={resetBoard}>Reset</button>
     </Container>
   )

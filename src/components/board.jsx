@@ -62,10 +62,10 @@ function generateBoard(size) {
 
 // Component
 function Board() {
-  const scale = 5
   const gridSize = 3
 
   // Hooks
+  const [scale, setScale] = useState(5)
   const [cells, setCells] = useState(generateBoard(gridSize))
   const [turn, setTurn] = useState(true)
   const [winner, setWinner] = useState(null)
@@ -139,6 +139,10 @@ function Board() {
     }
   }
 
+  const handleScaleInput = ({ currentTarget: input }) => {
+    setScale(input.value)
+  }
+
   return (
     <Container>
       <h3>{renderInfoMessage()}</h3>
@@ -159,6 +163,7 @@ function Board() {
           )
         })}
       </GameBoard>
+      <input type="number" value={scale} onChange={handleScaleInput} />
       <button onClick={resetBoard}>Reset</button>
     </Container>
   )

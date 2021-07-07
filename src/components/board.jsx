@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 
 // Styles
@@ -30,8 +30,8 @@ const Cell = styled.button`
 const GameBoard = styled.div`
   display: flex;
 
-  width: ${props => props.scale * 3 + props.scale * 0.5}rem;
-  height: ${props => props.scale * 3 + props.scale * 0.5}rem;
+  width: ${props => props.scale * props.grid + props.scale * 0.5}rem;
+  height: ${props => props.scale * props.grid + props.scale * 0.5}rem;
 
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -46,9 +46,9 @@ const Container = styled.div`
 `
 
 // Helper functions
-function generateBoard() {
+function generateBoard(size) {
   // Create a vector of cells that will fill in the board grid
-  const vector = [...Array(9).keys()]
+  const vector = [...Array(size * 3).keys()]
   const cells = {}
 
   // Add to an object and give each cell their own state
@@ -61,13 +61,52 @@ function generateBoard() {
 
 // Component
 function Board() {
-  const [cells, setCells] = useState(generateBoard())
-  const [turn, setTurn] = useState(true)
   const scale = 5
+  const gridSize = 3
+
+  // Hooks
+  const [cells, setCells] = useState(generateBoard(gridSize))
+  const [turn, setTurn] = useState(true)
+  const [winner, setWinner] = useState(null)
+
+  useEffect(() => {
+    // Check for a winner
+    const potential_wins = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 7],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ]
+
+    const getState = id => {
+      return cells[id].cellState
+    }
+
+    for (let i = 0; i < potential_wins.length; i++) {
+      const row = potential_wins[i]
+
+      const currentState = getState(row[0])
+
+      console.log(currentState)
+      if (
+        currentState &&
+        currentState === getState(row[1]) &&
+        currentState === getState(row[2])
+      ) {
+        setWinner(currentState)
+      }
+    }
+  }, [cells])
 
   // Helper functions
   const resetBoard = () => {
-    setCells(generateBoard())
+    setCells(generateBoard(gridSize))
+    setTurn(true)
+    setWinner(null)
   }
 
   const handleCellClick = cellId => {
@@ -84,18 +123,14 @@ function Board() {
 
     setCells({ ...cells, [cellId]: { cellState } })
     setTurn(!turn)
-
-    const winner = checkWinner()
-
-    if (winner) console.log(winner)
   }
-
-  const checkWinner = () => {}
 
   return (
     <Container>
-      <h3>It's {turn ? "X" : "O"}'s turn</h3>
-      <GameBoard scale={scale}>
+      <h3>
+        {winner ? `${winner} has won!` : `It's ${turn ? "X" : "O"}'s turn`}
+      </h3>
+      <GameBoard scale={scale} grid={gridSize}>
         {Object.keys(cells).map(cell => {
           cell = parseInt(cell)
           const state = cells[cell].cellState
@@ -104,6 +139,7 @@ function Board() {
             <Cell
               key={cell}
               scale={scale}
+              disabled={winner}
               onClick={() => handleCellClick(cell)}
             >
               {state ? state : ""}

@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import useWindowSize from "../hooks/useWindowSize"
+import Button from "./button"
 import Cell from "./cell"
+import Slider from "./slider"
+import TiltWrapper from "./tiltWrapper"
 
 // Styles
 const GameBoard = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 
   width: ${props => props.pixels * props.grid + props.pixels * 0.5}px;
   height: ${props => props.pixels * props.grid + props.pixels * 0.5}px;
-
-  flex-wrap: wrap;
-  justify-content: space-evenly;
 `
 
 const Container = styled.div`
   display: flex;
-
-  height: 100vh;
-
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  height: 100vh;
 `
 
 // Helper functions
@@ -109,6 +110,7 @@ function Board() {
   }
 
   const handleCellClick = cellId => {
+    if (winner) return
     if (cells[cellId].cellState) return
 
     // Update the cell's state
@@ -143,32 +145,33 @@ function Board() {
   return (
     <Container>
       <h3>{renderInfoMessage()}</h3>
-      <GameBoard pixels={pixels} grid={gridSize}>
-        {Object.keys(cells).map(cell => {
-          cell = parseInt(cell)
-          const { cellState: state, winner: isWinner } = cells[cell]
+      <TiltWrapper>
+        <GameBoard pixels={pixels} grid={gridSize}>
+          {Object.keys(cells).map(cell => {
+            cell = parseInt(cell)
+            const { cellState: state, winner: isWinner } = cells[cell]
 
-          return (
-            <Cell
-              key={cell}
-              pixels={pixels}
-              winner={isWinner}
-              disabled={winner || state}
-              onClick={() => handleCellClick(cell)}
-            >
-              {state ? state : ""}
-            </Cell>
-          )
-        })}
-      </GameBoard>
-      <input
+            return (
+              <Cell
+                key={cell}
+                pixels={pixels}
+                winner={isWinner}
+                onClick={() => handleCellClick(cell)}
+              >
+                {state ? state : ""}
+              </Cell>
+            )
+          })}
+        </GameBoard>
+      </TiltWrapper>
+      <Slider
         type="range"
         min="30"
         max={height / 5}
         value={pixels}
         onChange={handlePixelsInput}
       />
-      <button onClick={resetBoard}>Reset</button>
+      <Button onClick={resetBoard}>Reset</Button>
     </Container>
   )
 }

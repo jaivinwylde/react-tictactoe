@@ -10,13 +10,13 @@ const Cell = styled.button`
   border: 0;
   margin: 0;
   padding: 0;
-  background-color: #202020;
+  background-color: ${props => (props.winner ? "#2e2e2e" : "#202020")};
   outline: none;
   color: #fff;
   font-weight: bold;
   font-size: ${props => props.scale / 3}rem;
 
-  cursor: pointer;
+  cursor: ${props => (props.disabled ? "not-allowed" : "pointer")};
 
   &:hover {
     background-color: #2e2e2e;
@@ -54,7 +54,7 @@ function generateBoard(size) {
 
   // Add to an object and give each cell their own state
   vector.forEach(cell => {
-    cells[cell] = { cellState: null }
+    cells[cell] = { cellState: null, winner: false }
   })
 
   return cells
@@ -72,6 +72,8 @@ function Board() {
   const [moves, setMoves] = useState(0)
 
   useEffect(() => {
+    if (winner) return
+
     // Check for a winner
     const potential_wins = [
       [0, 1, 2],
@@ -98,10 +100,17 @@ function Board() {
         currentState === getState(row[1]) &&
         currentState === getState(row[2])
       ) {
+        const winningCells = { ...cells }
+
+        for (const i of row) {
+          winningCells[i] = { ...cells[i], winner: true }
+        }
+
+        setCells(winningCells)
         setWinner(currentState)
       }
     }
-  }, [cells])
+  }, [winner, cells])
 
   // Helper functions
   const resetBoard = () => {
@@ -125,7 +134,7 @@ function Board() {
 
     setMoves(moves + 1)
 
-    setCells({ ...cells, [cellId]: { cellState } })
+    setCells({ ...cells, [cellId]: { cellState, winner: false } })
     setTurn(!turn)
   }
 
@@ -149,13 +158,14 @@ function Board() {
       <GameBoard scale={scale} grid={gridSize}>
         {Object.keys(cells).map(cell => {
           cell = parseInt(cell)
-          const state = cells[cell].cellState
+          const { cellState: state, winner } = cells[cell]
 
           return (
             <Cell
               key={cell}
               scale={scale}
-              disabled={winner}
+              winner={winner}
+              disabled={winner || state}
               onClick={() => handleCellClick(cell)}
             >
               {state ? state : ""}

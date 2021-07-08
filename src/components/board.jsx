@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
+import useWindowSize from "../hooks/useWindowSize"
 
 // Styles
 const Cell = styled.button`
   position: relative;
 
-  width: ${props => props.scale}rem;
-  height: ${props => props.scale}rem;
+  width: ${props => props.pixels}px;
+  height: ${props => props.pixels}px;
   border: 0;
   margin: 0;
   padding: 0;
@@ -14,7 +15,7 @@ const Cell = styled.button`
   outline: none;
   color: #fff;
   font-weight: bold;
-  font-size: ${props => props.scale / 3}rem;
+  font-size: ${props => props.pixels / 3}px;
 
   cursor: ${props => (props.disabled ? "not-allowed" : "pointer")};
 
@@ -29,8 +30,8 @@ const Cell = styled.button`
 const GameBoard = styled.div`
   display: flex;
 
-  width: ${props => props.scale * props.grid + props.scale * 0.5}rem;
-  height: ${props => props.scale * props.grid + props.scale * 0.5}rem;
+  width: ${props => props.pixels * props.grid + props.pixels * 0.5}px;
+  height: ${props => props.pixels * props.grid + props.pixels * 0.5}px;
 
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -65,11 +66,21 @@ function Board() {
   const gridSize = 3
 
   // Hooks
-  const [scale, setScale] = useState(5)
+  const { height } = useWindowSize()
+
+  // Start the slider in the middle
+  const [pixels, setPixels] = useState(height / 5 / 2 + 15)
+
   const [cells, setCells] = useState(generateBoard(gridSize))
   const [turn, setTurn] = useState(true)
   const [winner, setWinner] = useState(null)
   const [moves, setMoves] = useState(0)
+
+  useEffect(() => {
+    if (height / 5 < pixels) {
+      setPixels(height / 5)
+    }
+  }, [height, pixels])
 
   useEffect(() => {
     if (winner) return
@@ -148,14 +159,14 @@ function Board() {
     }
   }
 
-  const handleScaleInput = ({ currentTarget: input }) => {
-    setScale(input.value)
+  const handlePixelsInput = ({ currentTarget: input }) => {
+    setPixels(input.value)
   }
 
   return (
     <Container>
       <h3>{renderInfoMessage()}</h3>
-      <GameBoard scale={scale} grid={gridSize}>
+      <GameBoard pixels={pixels} grid={gridSize}>
         {Object.keys(cells).map(cell => {
           cell = parseInt(cell)
           const { cellState: state, winner } = cells[cell]
@@ -163,7 +174,7 @@ function Board() {
           return (
             <Cell
               key={cell}
-              scale={scale}
+              pixels={pixels}
               winner={winner}
               disabled={winner || state}
               onClick={() => handleCellClick(cell)}
@@ -175,10 +186,10 @@ function Board() {
       </GameBoard>
       <input
         type="range"
-        min="1"
-        max="15"
-        value={scale}
-        onChange={handleScaleInput}
+        min="30"
+        max={height / 5}
+        value={pixels}
+        onChange={handlePixelsInput}
       />
       <button onClick={resetBoard}>Reset</button>
     </Container>

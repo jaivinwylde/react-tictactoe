@@ -4,10 +4,11 @@ import useMousePos from "../hooks/useMousePos"
 
 const Container = styled.div`
   transform-style: preserve-3d;
+  transition: 150ms ease-out;
 `
 
 function TiltWrapper({ children }) {
-  const maxRotation = 25
+  const maxRotation = 15
 
   //Hooks
   const { x: mouseX, y: mouseY } = useMousePos()
@@ -38,7 +39,9 @@ function TiltWrapper({ children }) {
       style={{
         transform:
           `perspective(800px) rotateX(${rotation.x}deg) ` +
-          `rotateY(${rotation.y}deg)`,
+          `rotateY(${rotation.y}deg) scale(${
+            rotation.x + rotation.y ? 1.1 : 1
+          })`,
       }}
     >
       {children}

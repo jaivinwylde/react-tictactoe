@@ -11,6 +11,7 @@ const GameBoard = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  margin: 3rem;
 
   width: ${props => props.pixels * props.grid + props.pixels * 0.5}px;
   height: ${props => props.pixels * props.grid + props.pixels * 0.5}px;
@@ -23,6 +24,10 @@ const Container = styled.div`
   align-items: center;
 
   height: 100vh;
+
+  input {
+    margin: 0 0 3rem 0;
+  }
 `
 
 // Helper functions

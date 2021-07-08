@@ -1,27 +1,28 @@
 import styled from "styled-components"
+import Button from "./button"
 
-const Cell = styled.button`
-  position: relative;
-
+const StyledCell = styled(Button)`
   width: ${props => props.pixels}px;
   height: ${props => props.pixels}px;
-  border: 0;
-  margin: 0;
   padding: 0;
-  background-color: ${props => (props.winner ? "#2e2e2e" : "#202020")};
-  outline: none;
-  color: #fff;
-  font-weight: bold;
-  font-size: ${props => props.pixels / 3}px;
 
-  cursor: ${props => (props.disabled ? "not-allowed" : "pointer")};
-
-  &:hover:enabled {
-    background-color: #2e2e2e;
-  }
   &:active {
-    background-color: #202020;
+    margin: 0;
+    padding: 0;
+  }
+
+  p {
+    transform: translateZ(25px);
+    filter: drop-shadow(10px 5px 5px #121212);
   }
 `
+
+function Cell({ children, ...props }) {
+  return (
+    <StyledCell {...props}>
+      <p>{children}</p>
+    </StyledCell>
+  )
+}
 
 export default Cell

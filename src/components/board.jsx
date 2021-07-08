@@ -1,32 +1,9 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import useWindowSize from "../hooks/useWindowSize"
+import Cell from "./cell"
 
 // Styles
-const Cell = styled.button`
-  position: relative;
-
-  width: ${props => props.pixels}px;
-  height: ${props => props.pixels}px;
-  border: 0;
-  margin: 0;
-  padding: 0;
-  background-color: ${props => (props.winner ? "#2e2e2e" : "#202020")};
-  outline: none;
-  color: #fff;
-  font-weight: bold;
-  font-size: ${props => props.pixels / 3}px;
-
-  cursor: ${props => (props.disabled ? "not-allowed" : "pointer")};
-
-  &:hover {
-    background-color: #2e2e2e;
-  }
-  &:active {
-    background-color: #202020;
-  }
-`
-
 const GameBoard = styled.div`
   display: flex;
 
@@ -169,13 +146,13 @@ function Board() {
       <GameBoard pixels={pixels} grid={gridSize}>
         {Object.keys(cells).map(cell => {
           cell = parseInt(cell)
-          const { cellState: state, winner } = cells[cell]
+          const { cellState: state, winner: isWinner } = cells[cell]
 
           return (
             <Cell
               key={cell}
               pixels={pixels}
-              winner={winner}
+              winner={isWinner}
               disabled={winner || state}
               onClick={() => handleCellClick(cell)}
             >

@@ -6,7 +6,7 @@ const Button = styled.button`
   border: 0;
   margin: 0;
   padding: 0.7rem;
-  background-color: ${props => (props.winner ? "#2e2e2e" : "#202020")};
+  background-color: #202020;
   outline: none;
   color: #fff;
   font-weight: bold;

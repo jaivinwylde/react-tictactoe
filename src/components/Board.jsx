@@ -6,7 +6,6 @@ import Slider from "./Slider"
 import TiltWrapper from "./TiltWrapper"
 import styled from "styled-components"
 
-// Styles
 const GameBoard = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -30,7 +29,6 @@ const Container = styled.div`
   }
 `
 
-// Helper functions
 function generateBoard(size) {
   // Create a vector of cells that will fill in the board grid
   const vector = [...Array(size * 3).keys()]
@@ -44,10 +42,7 @@ function generateBoard(size) {
   return cells
 }
 
-// Component
-export default function Board() {
-  const gridSize = 3
-
+export default function Board({ gridSize = 3 }) {
   // Hooks
   const { height } = useWindowSize()
 
@@ -154,6 +149,7 @@ export default function Board() {
         <GameBoard pixels={pixels} grid={gridSize}>
           {Object.keys(cells).map(cell => {
             cell = +cell
+
             const { cellState: state, winner: isWinner } = cells[cell]
 
             return (

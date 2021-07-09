@@ -16,7 +16,6 @@ const StyledCell = styled(Button)`
   }
 
   & label {
-    pointer-events: none;
     filter: drop-shadow(5px 5px 5px #121212);
   }
 `

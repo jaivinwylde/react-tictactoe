@@ -6,7 +6,6 @@ const Container = styled.div`
 `
 
 export default function TiltWrapper({ children, maxRotation = 15 }) {
-  //Hooks
   const [rotation, setRotation] = useState({ x: 0, y: 0 })
   const container = useRef(null)
 

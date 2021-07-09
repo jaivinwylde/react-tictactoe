@@ -43,7 +43,6 @@ function generateBoard(size) {
 }
 
 export default function Board({ gridSize = 3 }) {
-  // Hooks
   const { height } = useWindowSize()
 
   // Start the slider in the middle
@@ -101,7 +100,6 @@ export default function Board({ gridSize = 3 }) {
     }
   }, [winner, cells])
 
-  // Helper functions
   const resetBoard = () => {
     setCells(generateBoard(gridSize))
     setTurn(true)

@@ -6,23 +6,25 @@ const Container = styled.div`
   transition: 150ms ease-out;
 `
 
-function TiltWrapper({ children }) {
-  const maxRotation = 15
-
+export default function TiltWrapper({ children, maxRotation = 15 }) {
   //Hooks
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [rotation, setRotation] = useState({ x: 0, y: 0 })
   const container = useRef(null)
 
   useEffect(() => {
+    // Get the current container's rect and mouse position
     const { x, y, width, height } = container.current.getBoundingClientRect()
     const { x: mouseX, y: mouseY } = mousePos
 
-    let xPercent = -(mouseY - (y + height / 2)) / (height / 2)
-    let yPercent = (mouseX - (x + width / 2)) / (width / 2)
+    // Calculate the percent that we should rotate in each dimension
+
+    // Makes numbers between -1 and 1
+    const xPercent = -(mouseY - (y + height / 2)) / (height / 2)
+    const yPercent = (mouseX - (x + width / 2)) / (width / 2)
 
     setRotation({ x: xPercent * maxRotation, y: yPercent * maxRotation })
-  }, [mousePos])
+  }, [mousePos, maxRotation])
 
   const handleMouseMove = ({ clientX: x, clientY: y }) => {
     setMousePos({ x, y })
@@ -32,10 +34,7 @@ function TiltWrapper({ children }) {
     <Container
       ref={container}
       onMouseMove={e => handleMouseMove(e)}
-      onMouseLeave={() => {
-        console.log("leave")
-        setRotation({ x: 0, y: 0 })
-      }}
+      onMouseLeave={() => setRotation({ x: 0, y: 0 })}
       style={{
         transform:
           `perspective(800px) rotateX(${rotation.x}deg) ` +
@@ -48,5 +47,3 @@ function TiltWrapper({ children }) {
     </Container>
   )
 }
-
-export default TiltWrapper

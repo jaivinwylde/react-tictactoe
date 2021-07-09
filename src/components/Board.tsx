@@ -29,7 +29,7 @@ const Container = styled.div`
   }
 `
 
-function generateBoard(size) {
+function generateBoard(size: number) {
   // Create a vector of cells that will fill in the board grid
   const vector = [...Array(size * 3).keys()]
   const cells = {}
@@ -74,7 +74,7 @@ export default function Board({ gridSize = 3 }) {
       [2, 4, 6],
     ]
 
-    const getState = id => {
+    const getState = (id: number) => {
       return cells[id].cellState
     }
 
@@ -107,7 +107,7 @@ export default function Board({ gridSize = 3 }) {
     setMoves(0)
   }
 
-  const handleCellClick = cellId => {
+  const handleCellClick = (cellId: number) => {
     if (winner) return
     if (cells[cellId].cellState) return
 
@@ -146,16 +146,16 @@ export default function Board({ gridSize = 3 }) {
       <TiltWrapper>
         <GameBoard pixels={pixels} grid={gridSize}>
           {Object.keys(cells).map(cell => {
-            cell = +cell
+            const cellId = +cell
 
-            const { cellState: state, winner: isWinner } = cells[cell]
+            const { cellState: state, winner: isWinner } = cells[cellId]
 
             return (
               <Cell
-                key={cell}
+                key={cellId}
                 pixels={pixels}
                 winner={isWinner}
-                onClick={() => handleCellClick(cell)}
+                onClick={() => handleCellClick(cellId)}
               >
                 {state ? state : ""}
               </Cell>

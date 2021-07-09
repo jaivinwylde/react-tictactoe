@@ -20,9 +20,9 @@ const StyledCell = styled(Button)`
   }
 `
 
-export default function Cell({ children, ...props }) {
+export default function Cell({ children, winner, ...props }) {
   return (
-    <StyledCell {...props}>
+    <StyledCell winner={winner} {...props}>
       <label>{children}</label>
     </StyledCell>
   )

@@ -6,6 +6,7 @@ const StyledCell = styled(Button)`
   height: ${props => props.pixels}px;
   padding: 0;
   background-color: ${props => (props.winner ? "#6BC754" : "#202020")};
+  transform-style: preserve-3d;
 
   &:hover:enabled {
     background-color: ${props => (props.winner ? "#6BC754" : "#2e2e2e")};
@@ -16,8 +17,9 @@ const StyledCell = styled(Button)`
   }
 
   & label {
+    pointer-events: none;
     transform: translateZ(${props => props.pixels * 0.25}px);
-    filter: drop-shadow(5px 5px 3px #121212);
+    filter: drop-shadow(5px 5px 5px #121212);
   }
 `
 

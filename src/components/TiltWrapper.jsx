@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react"
 import styled from "styled-components"
 
 const Container = styled.div`
-  transform-style: preserve-3d;
   transition: 150ms ease-out;
 `
 

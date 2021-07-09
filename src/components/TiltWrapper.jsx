@@ -15,7 +15,7 @@ export default function TiltWrapper({ children, maxRotation = 15 }) {
 
     // Calculate the percent that we should rotate in each dimension
 
-    // Makes numbers between -1 and 1 for each dimension
+    // Make rotation percents between -1 and 1 for each dimension
     const xPercent = -(mouseY - (y + height / 2)) / (height / 2)
     const yPercent = (mouseX - (x + width / 2)) / (width / 2)
 

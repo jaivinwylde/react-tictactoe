@@ -1,10 +1,8 @@
 import styled from "styled-components"
 
-const Slider = styled.input`
+export default styled.input`
   -webkit-appearance: none;
   width: 150px;
-  padding: 0;
-  margin: 0;
   height: 25px;
   background: #202020;
   outline: none;
@@ -25,5 +23,3 @@ const Slider = styled.input`
     cursor: pointer;
   }
 `
-
-export default Slider

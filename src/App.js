@@ -1,12 +1,10 @@
 import React from "react"
-import Board from "./components/board"
+import Board from "./components/Board"
 
-function App() {
+export default function App() {
   return (
     <div>
       <Board />
     </div>
   )
 }
-
-export default App

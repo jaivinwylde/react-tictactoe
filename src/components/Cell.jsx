@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import Button from "./button"
+import Button from "./Button"
 
 const StyledCell = styled(Button)`
   width: ${props => props.pixels}px;
@@ -15,18 +15,16 @@ const StyledCell = styled(Button)`
     padding: 0;
   }
 
-  p {
-    transform: translateZ(${props => props.pixels * 0.3}px);
+  & label {
+    transform: translateZ(${props => props.pixels * 0.25}px);
     filter: drop-shadow(5px 5px 3px #121212);
   }
 `
 
-function Cell({ children, ...props }) {
+export default function Cell({ children, ...props }) {
   return (
     <StyledCell {...props}>
-      <p>{children}</p>
+      <label>{children}</label>
     </StyledCell>
   )
 }
-
-export default Cell

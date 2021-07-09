@@ -1,10 +1,9 @@
 import styled from "styled-components"
 
-const Button = styled.button`
+export default styled.button`
   width: ${props => props.pixels}px;
   height: ${props => props.pixels}px;
   border: 0;
-  margin: 0;
   padding: 0.7rem;
   background-color: #202020;
   outline: none;
@@ -23,5 +22,3 @@ const Button = styled.button`
     transform: scale(0.9);
   }
 `
-
-export default Button

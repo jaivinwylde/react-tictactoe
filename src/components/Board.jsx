@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react"
-import styled from "styled-components"
 import useWindowSize from "../hooks/useWindowSize"
-import Button from "./button"
-import Cell from "./cell"
-import Slider from "./slider"
-import TiltWrapper from "./tiltWrapper"
+import Button from "./Button"
+import Cell from "./Cell"
+import Slider from "./Slider"
+import TiltWrapper from "./TiltWrapper"
+import styled from "styled-components"
 
 // Styles
 const GameBoard = styled.div`
@@ -45,7 +45,7 @@ function generateBoard(size) {
 }
 
 // Component
-function Board() {
+export default function Board() {
   const gridSize = 3
 
   // Hooks
@@ -153,7 +153,7 @@ function Board() {
       <TiltWrapper>
         <GameBoard pixels={pixels} grid={gridSize}>
           {Object.keys(cells).map(cell => {
-            cell = parseInt(cell)
+            cell = +cell
             const { cellState: state, winner: isWinner } = cells[cell]
 
             return (
@@ -180,5 +180,3 @@ function Board() {
     </Container>
   )
 }
-
-export default Board

@@ -5,13 +5,13 @@ import { createGlobalStyle } from "styled-components"
 
 const GlobalStyle = createGlobalStyle`
   html {
-    margin: none;
-    padding: none;
+    background-color: #121212;
   }
 
   body {
-    background-color: #121212;
     color: #fff;
+    margin: none;
+    padding: none;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
     "Helvetica Neue", sans-serif;

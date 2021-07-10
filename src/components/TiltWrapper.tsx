@@ -5,13 +5,24 @@ const Container = styled.div`
   transition: 150ms ease-out;
 `
 
-export default function TiltWrapper({ children, maxRotation = 15 }) {
-  const [rotation, setRotation] = useState({ x: 0, y: 0 })
-  const container = useRef(null)
+interface TiltWrapperProps {
+  maxRotation?: number
+}
 
-  const handleMouseMove = ({ clientX: mouseX, clientY: mouseY }) => {
+const TiltWrapper: React.FC<TiltWrapperProps> = ({
+  children,
+  maxRotation = 15,
+}) => {
+  const [rotation, setRotation] = useState({ x: 0, y: 0 })
+  const container = useRef<HTMLDivElement | null>(null)
+
+  const handleMouseMove = ({
+    clientX: mouseX,
+    clientY: mouseY,
+  }: React.MouseEvent) => {
     // Get the current container's rect and mouse position
-    const { x, y, width, height } = container.current.getBoundingClientRect()
+    const { x, y, width, height } =
+      container?.current?.getBoundingClientRect()!
 
     // Calculate the percent that we should rotate in each dimension
 
@@ -39,3 +50,5 @@ export default function TiltWrapper({ children, maxRotation = 15 }) {
     </Container>
   )
 }
+
+export default TiltWrapper

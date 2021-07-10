@@ -1,7 +1,14 @@
 import styled from "styled-components"
 import Button from "./Button"
 
-const StyledCell = styled(Button)`
+interface CellProps {
+  pixels: number
+  winner: boolean
+  onClick: React.MouseEventHandler<HTMLButtonElement> &
+    ((cellId: number) => void)
+}
+
+const StyledCell = styled(Button)<CellProps>`
   width: ${props => props.pixels}px;
   height: ${props => props.pixels}px;
   padding: 0;
@@ -17,13 +24,16 @@ const StyledCell = styled(Button)`
 
   & label {
     filter: drop-shadow(5px 5px 5px #121212);
+    font-size: ${props => props.theme.sizes.text.medium}px;
   }
 `
 
-export default function Cell({ children, winner, ...props }) {
+const Cell: React.FC<CellProps> = ({ children, pixels, winner, onClick }) => {
   return (
-    <StyledCell winner={winner} {...props}>
+    <StyledCell pixels={pixels} winner={winner} onClick={onClick}>
       <label>{children}</label>
     </StyledCell>
   )
 }
+
+export default Cell

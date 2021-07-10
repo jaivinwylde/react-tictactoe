@@ -6,7 +6,16 @@ import Slider from "./Slider"
 import TiltWrapper from "./TiltWrapper"
 import styled from "styled-components"
 
-const GameBoard = styled.div`
+interface Cells {
+  [id: number]: { cellState: string | null; winner: boolean }
+}
+
+interface GameBoardProps {
+  pixels: number
+  grid: number
+}
+
+const GameBoard = styled.div<GameBoardProps>`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -29,20 +38,24 @@ const Container = styled.div`
   }
 `
 
-function generateBoard(size: number) {
+function generateBoard(size: number): Cells {
   // Create a vector of cells that will fill in the board grid
   const vector = [...Array(size * 3).keys()]
-  const cells = {}
+  const cells: Partial<Cells> = {}
 
   // Add to an object and give each cell their own state
-  vector.forEach(cell => {
+  vector.forEach((cell: number) => {
     cells[cell] = { cellState: null, winner: false }
   })
 
-  return cells
+  return cells as Cells
 }
 
-export default function Board({ gridSize = 3 }) {
+interface BoardProps {
+  gridSize?: number
+}
+
+const Board: React.FC<BoardProps> = ({ gridSize = 3 }) => {
   const { height } = useWindowSize()
 
   // Start the slider in the middle
@@ -50,7 +63,7 @@ export default function Board({ gridSize = 3 }) {
 
   const [cells, setCells] = useState(generateBoard(gridSize))
   const [turn, setTurn] = useState(true)
-  const [winner, setWinner] = useState(null)
+  const [winner, setWinner] = useState<string | null>(null)
   const [moves, setMoves] = useState(0)
 
   useEffect(() => {
@@ -136,8 +149,8 @@ export default function Board({ gridSize = 3 }) {
     }
   }
 
-  const handlePixelsInput = ({ currentTarget: input }) => {
-    setPixels(input.value)
+  const handlePixelsInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPixels(+event.currentTarget.value)
   }
 
   return (
@@ -174,3 +187,5 @@ export default function Board({ gridSize = 3 }) {
     </Container>
   )
 }
+
+export default Board

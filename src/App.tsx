@@ -1,10 +1,16 @@
 import React from "react"
+import { ThemeProvider } from "styled-components"
 import Board from "./components/Board"
+import { defaultTheme } from "./styles/theme"
 
-export default function App() {
+const App: React.FC = () => {
   return (
     <div>
-      <Board />
+      <ThemeProvider theme={defaultTheme}>
+        <Board />
+      </ThemeProvider>
     </div>
   )
 }
+
+export default App

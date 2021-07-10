@@ -1,15 +1,19 @@
 import styled from "styled-components"
 
-export default styled.button`
-  width: ${props => props.pixels}px;
-  height: ${props => props.pixels}px;
+interface ButtonProps {
+  disabled?: boolean
+}
+
+export default styled.button<ButtonProps>`
+  width: ${props => props.theme.sizes.button.width}px;
+  height: ${props => props.theme.sizes.text.height}px;
   border: 0;
   padding: 0.7rem;
   background-color: #202020;
   outline: none;
   color: #fff;
   font-weight: bold;
-  font-size: ${props => props.pixels / 3}px;
+  font-size: ${props => props.theme.sizes.text.medium / 3}px;
 
   transition: background-color 100ms ease-in-out;
 

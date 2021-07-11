@@ -149,8 +149,10 @@ const Board: React.FC<BoardProps> = ({ gridSize = 3 }) => {
     }
   }
 
-  const handlePixelsInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPixels(+event.currentTarget.value)
+  const handlePixelsInput = ({
+    currentTarget: input,
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    setPixels(+input.value)
   }
 
   return (

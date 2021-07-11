@@ -7,11 +7,13 @@ const Container = styled.div`
 
 interface TiltWrapperProps {
   maxRotation?: number
+  perspective?: number
 }
 
 const TiltWrapper: React.FC<TiltWrapperProps> = ({
   children,
   maxRotation = 15,
+  perspective = 800,
 }) => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 })
   const container = useRef<HTMLDivElement | null>(null)
@@ -40,7 +42,7 @@ const TiltWrapper: React.FC<TiltWrapperProps> = ({
       onMouseLeave={() => setRotation({ x: 0, y: 0 })}
       style={{
         transform:
-          `perspective(800px) rotateX(${rotation.x}deg) ` +
+          `perspective(${perspective}px) rotateX(${rotation.x}deg) ` +
           `rotateY(${rotation.y}deg) scale(${
             rotation.x + rotation.y ? 1.1 : 1
           })`,

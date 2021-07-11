@@ -4,6 +4,10 @@ export const defaultTheme: DefaultTheme = {
   colors: {
     primary: "#202020",
     highlight: "#2e2e2e",
+    text: {
+      primary: "#fff",
+    },
+    bg: "#121212",
   },
   sizes: {
     text: {

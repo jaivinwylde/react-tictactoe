@@ -1,13 +1,18 @@
 import styled from "styled-components"
 import Button from "./Button"
 
+interface StyledCellProps {
+  pixels: number
+  winner: boolean
+}
+
 interface CellProps {
   pixels: number
   winner: boolean
   onClick: () => void
 }
 
-const StyledCell = styled(Button)<CellProps>`
+const StyledCell = styled(Button)<StyledCellProps>`
   width: ${props => props.pixels}px;
   height: ${props => props.pixels}px;
   padding: 0;

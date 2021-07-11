@@ -1,7 +1,19 @@
 import React, { useRef, useState } from "react"
 import styled from "styled-components"
 
-const Container = styled.div`
+interface ContainerProps {
+  perspective: number
+  rotateX: number
+  rotateY: number
+}
+
+const Container = styled.div.attrs((props: ContainerProps) => {
+  transform: `perspective(${props.perspective}px) rotateX(${
+    props.rotateX
+  }deg) rotateY(${props.rotateY}deg) scale(${
+    props.rotateX + props.rotateY ? 1.1 : 1
+  })`
+})`
   transition: 150ms ease-out;
 `
 
@@ -37,20 +49,23 @@ const TiltWrapper: React.FC<TiltWrapperProps> = ({
 
   return (
     <Container
+      perspective={perspective}
+      rotateX={rotation.x}
+      rotateY={rotation.y}
       ref={container}
       onMouseMove={e => handleMouseMove(e)}
       onMouseLeave={() => setRotation({ x: 0, y: 0 })}
-      style={{
-        transform:
-          `perspective(${perspective}px) rotateX(${rotation.x}deg) ` +
-          `rotateY(${rotation.y}deg) scale(${
-            rotation.x + rotation.y ? 1.1 : 1
-          })`,
-      }}
     >
       {children}
     </Container>
   )
 }
 
+// style={{
+//   transform:
+//     `perspective(${perspective}px) rotateX(${rotation.x}deg) ` +
+//     `rotateY(${rotation.y}deg) scale(${
+//       rotation.x + rotation.y ? 1.1 : 1
+//     })`,
+// }}
 export default TiltWrapper

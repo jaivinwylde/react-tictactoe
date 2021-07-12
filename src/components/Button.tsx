@@ -4,7 +4,7 @@ interface ButtonProps {
   disabled?: boolean
 }
 
-export default styled.button<ButtonProps>`
+export const Button = styled.button<ButtonProps>`
   width: ${props => props.theme.sizes.button.width}px;
   height: ${props => props.theme.sizes.text.height}px;
   border: 0;

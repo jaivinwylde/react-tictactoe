@@ -1,14 +1,14 @@
-import React from "react"
 import { ThemeProvider } from "styled-components"
-import Board from "./components/Board"
+import { GameProvider } from "./modules/ticTacToe/context"
+import { Game } from "./modules/ticTacToe/pages"
 import { defaultTheme } from "./styles/theme"
 
-const App: React.FC = () => {
+export function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Board />
+      <GameProvider>
+        <Game />
+      </GameProvider>
     </ThemeProvider>
   )
 }
-
-export default App

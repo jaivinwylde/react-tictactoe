@@ -1,25 +1,27 @@
+import React from "react"
 import styled from "styled-components"
-import Button from "./Button"
+import { Button } from "../../../components"
 
 interface StyledCellProps {
   pixels: number
-  winner: boolean
+  isWinner: boolean
 }
 
 interface CellProps {
+  children: React.ReactNode
   pixels: number
-  winner: boolean
-  onClick: () => void
+  isWinner: boolean
+  onClick(): void
 }
 
 const StyledCell = styled(Button)<StyledCellProps>`
   width: ${props => props.pixels}px;
   height: ${props => props.pixels}px;
   padding: 0;
-  background-color: ${props => (props.winner ? "#6BC754" : "#202020")};
+  background-color: ${props => (props.isWinner ? "#6BC754" : "#202020")};
 
   &:hover:enabled {
-    background-color: ${props => (props.winner ? "#6BC754" : "#2e2e2e")};
+    background-color: ${props => (props.isWinner ? "#6BC754" : "#2e2e2e")};
   }
   & label {
     filter: drop-shadow(5px 5px 5px #121212);
@@ -28,12 +30,10 @@ const StyledCell = styled(Button)<StyledCellProps>`
   }
 `
 
-const Cell: React.FC<CellProps> = ({ children, pixels, winner, onClick }) => {
+export function Cell({ children, pixels, isWinner, onClick }: CellProps) {
   return (
-    <StyledCell pixels={pixels} winner={winner} onClick={onClick}>
+    <StyledCell pixels={pixels} isWinner={isWinner} onClick={onClick}>
       <label>{children}</label>
     </StyledCell>
   )
 }
-
-export default Cell

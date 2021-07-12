@@ -1,32 +1,23 @@
 import React, { useRef, useState } from "react"
 import styled from "styled-components"
 
-interface ContainerProps {
-  perspective: number
-  rotateX: number
-  rotateY: number
-}
-
-const Container = styled.div.attrs((props: ContainerProps) => {
-  transform: `perspective(${props.perspective}px) rotateX(${
-    props.rotateX
-  }deg) rotateY(${props.rotateY}deg) scale(${
-    props.rotateX + props.rotateY ? 1.1 : 1
-  })`
-})`
+const Container = styled.div`
   transition: 150ms ease-out;
 `
 
 interface TiltWrapperProps {
+  children: React.ReactNode
   maxRotation?: number
   perspective?: number
+  pushOnHover?: boolean
 }
 
-const TiltWrapper: React.FC<TiltWrapperProps> = ({
+export function TiltWrapper({
   children,
   maxRotation = 15,
   perspective = 800,
-}) => {
+  pushOnHover = true,
+}: TiltWrapperProps) {
   const [rotation, setRotation] = useState({ x: 0, y: 0 })
   const container = useRef<HTMLDivElement | null>(null)
 
@@ -41,31 +32,32 @@ const TiltWrapper: React.FC<TiltWrapperProps> = ({
     // Calculate the percent that we should rotate in each dimension
 
     // Make rotation percents between -1 and 1 for each dimension
-    const xPercent = -(mouseY - (y + height / 2)) / (height / 2)
-    const yPercent = (mouseX - (x + width / 2)) / (width / 2)
+    let xPercent = (mouseY - (y + height / 2)) / (height / 2)
+    let yPercent = (mouseX - (x + width / 2)) / (width / 2)
+
+    if (pushOnHover) {
+      xPercent = -xPercent
+    } else {
+      yPercent = -yPercent
+    }
 
     setRotation({ x: xPercent * maxRotation, y: yPercent * maxRotation })
   }
 
   return (
     <Container
-      perspective={perspective}
-      rotateX={rotation.x}
-      rotateY={rotation.y}
       ref={container}
       onMouseMove={e => handleMouseMove(e)}
       onMouseLeave={() => setRotation({ x: 0, y: 0 })}
+      style={{
+        transform:
+          `perspective(${perspective}px) rotateX(${rotation.x}deg) ` +
+          `rotateY(${rotation.y}deg) scale(${
+            rotation.x + rotation.y ? 1.1 : 1
+          })`,
+      }}
     >
       {children}
     </Container>
   )
 }
-
-// style={{
-//   transform:
-//     `perspective(${perspective}px) rotateX(${rotation.x}deg) ` +
-//     `rotateY(${rotation.y}deg) scale(${
-//       rotation.x + rotation.y ? 1.1 : 1
-//     })`,
-// }}
-export default TiltWrapper

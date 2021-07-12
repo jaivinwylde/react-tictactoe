@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export default styled.input`
+export const Slider = styled.input`
   -webkit-appearance: none;
   width: 10rem;
   height: 1.5rem;

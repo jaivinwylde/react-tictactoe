@@ -1,5 +1,6 @@
+import { TiltWrapper } from "components"
 import styled from "styled-components"
-import { TiltWrapper } from "../../../components"
+
 import { GameBoard } from "../components"
 import { useGame } from "../context/GameContext"
 

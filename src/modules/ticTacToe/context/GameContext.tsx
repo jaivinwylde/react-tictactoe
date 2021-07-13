@@ -1,5 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react"
-import { CellsInterface, CellInterface } from "../types"
+import { createContext,useContext, useEffect, useState } from "react"
+
+import { CellInterface, CellsInterface } from "../types"
 import { generateBoard } from "../utils"
 
 interface ContextInterface {

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import { useRef, useState } from "react"
 import styled from "styled-components"
 
 const Container = styled.div`
@@ -26,8 +26,13 @@ export function TiltWrapper({
     clientY: mouseY,
   }: React.MouseEvent) => {
     // Get the current container's rect and mouse position
-    const { x, y, width, height } =
-      container?.current?.getBoundingClientRect()!
+    const rect = container.current?.getBoundingClientRect()
+
+    if (!rect) {
+      return
+    }
+
+    const { x, y, width, height } = rect
 
     // Calculate the percent that we should rotate in each dimension
 

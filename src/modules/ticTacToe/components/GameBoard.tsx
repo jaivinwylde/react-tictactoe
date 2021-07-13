@@ -1,6 +1,7 @@
-import { Cell } from "./Cell"
 import styled from "styled-components"
+
 import { useGame } from "../context"
+import { Cell } from "./Cell"
 
 interface StyledGameBoardProps {
   pixels: number

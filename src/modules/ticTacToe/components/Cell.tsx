@@ -1,6 +1,5 @@
-import React from "react"
 import styled from "styled-components"
-import { clickable } from "../../../ui/mixins"
+import { clickable } from "styles/mixins"
 
 interface StyledCellProps {
   pixels: number

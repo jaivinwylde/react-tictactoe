@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { clickable } from "../ui/mixins"
+import { clickable } from "styles/mixins"
 
 export const Button = styled.button`
   width: ${props => props.theme.sizes.button.width}px;

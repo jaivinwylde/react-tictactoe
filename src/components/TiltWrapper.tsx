@@ -9,14 +9,14 @@ interface TiltWrapperProps {
   children: React.ReactNode
   maxRotation?: number
   perspective?: number
-  pushOnHover?: boolean
+  invert?: boolean
 }
 
 export function TiltWrapper({
   children,
   maxRotation = 15,
   perspective = 800,
-  pushOnHover = true,
+  invert = false,
 }: TiltWrapperProps) {
   const [rotation, setRotation] = useState({ x: 0, y: 0 })
   const container = useRef<HTMLDivElement | null>(null)
@@ -35,9 +35,11 @@ export function TiltWrapper({
     let xPercent = (mouseY - (y + height / 2)) / (height / 2)
     let yPercent = (mouseX - (x + width / 2)) / (width / 2)
 
-    if (pushOnHover) {
+    if (!invert) {
+      // Push on hover
       xPercent = -xPercent
     } else {
+      // Pull on hover
       yPercent = -yPercent
     }
 

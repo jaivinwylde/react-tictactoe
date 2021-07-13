@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Button } from "../../../components"
+import { clickable } from "../../../ui/mixins"
 
 interface StyledCellProps {
   pixels: number
@@ -14,11 +14,13 @@ interface CellProps {
   onClick(): void
 }
 
-const StyledCell = styled(Button)<StyledCellProps>`
+const StyledCell = styled.button<StyledCellProps>`
   width: ${props => props.pixels}px;
   height: ${props => props.pixels}px;
   padding: 0;
   background-color: ${props => (props.isWinner ? "#6BC754" : "#202020")};
+
+  ${clickable}
 
   &:hover:enabled {
     background-color: ${props => (props.isWinner ? "#6BC754" : "#2e2e2e")};

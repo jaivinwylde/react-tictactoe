@@ -22,10 +22,9 @@ interface GameBoardProps {
 }
 
 export function GameBoard({ scale = 1, gridSize = 3 }: GameBoardProps) {
-  const { cells, handleMove } = useGame()
+  const pixels = 120 * scale
 
-  // const [pixels, setPixels] = useState(150 * scale)
-  const pixels = 150 * scale
+  const { cells, handleMove } = useGame()
 
   return (
     <StyledGameBoard pixels={pixels} grid={gridSize}>

@@ -2,11 +2,13 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { App } from "./App"
 import { createGlobalStyle } from "styled-components"
+import { ThemeProvider } from "styled-components"
+import { defaultTheme } from "./ui/theme"
 
 const GlobalStyle = createGlobalStyle`
   html {
-    background-color: #121212;
-    color: #fff;
+    background-color: ${props => props.theme.colors.bg};
+    color: ${props => props.theme.colors.text.primary};
   }
 
   body {
@@ -27,8 +29,10 @@ const GlobalStyle = createGlobalStyle`
 
 ReactDOM.render(
   <React.StrictMode>
-    <GlobalStyle />
-    <App />
+    <ThemeProvider theme={defaultTheme}>
+      <GlobalStyle />
+      <App />
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 )

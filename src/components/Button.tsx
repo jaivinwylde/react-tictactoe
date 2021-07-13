@@ -1,28 +1,12 @@
 import styled from "styled-components"
+import { clickable } from "../ui/mixins"
 
-interface ButtonProps {
-  disabled?: boolean
-}
-
-export const Button = styled.button<ButtonProps>`
+export const Button = styled.button`
   width: ${props => props.theme.sizes.button.width}px;
-  height: ${props => props.theme.sizes.text.height}px;
-  border: 0;
+  height: ${props => props.theme.sizes.button.height}px;
   padding: 0.7rem;
-  background-color: #202020;
-  outline: none;
-  color: #fff;
-  font-weight: bold;
+  background-color: ${props => props.theme.colors.primary};
   font-size: ${props => props.theme.sizes.text.medium / 3}px;
 
-  transition: background-color 100ms ease-in-out;
-
-  cursor: ${props => (props.disabled ? "not-allowed" : "pointer")};
-
-  &:hover:enabled {
-    background-color: #2e2e2e;
-  }
-  &:active {
-    transform: scale(0.9);
-  }
+  ${clickable}
 `

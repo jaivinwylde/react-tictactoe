@@ -1,18 +1,18 @@
-import { createContext,useContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 
-import { CellInterface, CellsInterface } from "../types"
+import { CellsType, CellType } from "../types"
 import { generateBoard } from "../utils"
 
-interface ContextInterface {
+interface ContextType {
   gridSize: number
-  cells: CellsInterface
+  cells: CellsType
   turn: boolean
   winner: string | null
   moves: number
   handleMove(cellId: number): void
 }
 
-const GameContext = createContext<ContextInterface>({
+const GameContext = createContext<ContextType>({
   gridSize: 3,
   cells: {},
   turn: true,
@@ -23,11 +23,11 @@ const GameContext = createContext<ContextInterface>({
 
 export const useGame = () => useContext(GameContext)
 
-interface ProviderInterface {
+interface ProviderType {
   children: React.ReactNode
 }
 
-export function GameProvider({ children }: ProviderInterface) {
+export function GameProvider({ children }: ProviderType) {
   const gridSize = 3
 
   const [cells, setCells] = useState(generateBoard(gridSize))
@@ -98,7 +98,7 @@ export function GameProvider({ children }: ProviderInterface) {
       cellState = "O"
     }
 
-    const newCell: CellInterface = { cellState, isWinner: false }
+    const newCell: CellType = { cellState, isWinner: false }
 
     // Update the state
     setMoves(moves => moves + 1)

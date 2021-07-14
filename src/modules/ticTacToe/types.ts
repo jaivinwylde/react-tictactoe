@@ -1,8 +1,8 @@
-export interface CellInterface {
+export interface CellType {
   cellState: string | null
   isWinner: boolean
 }
 
-export interface CellsInterface {
-  [id: number]: CellInterface
+export interface CellsType {
+  [id: number]: CellType
 }

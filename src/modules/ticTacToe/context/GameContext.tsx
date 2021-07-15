@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react"
 
-import { CellsType, CellType } from "../types"
+import type { CellsType, CellType } from "../types"
 import { generateBoard } from "../utils"
 
 interface ContextType {

@@ -1,7 +1,8 @@
+import { motion } from "framer-motion"
 import { useRef, useState } from "react"
 import styled from "styled-components"
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   transition: 150ms ease-out;
 `
 
@@ -20,6 +21,23 @@ export function TiltWrapper({
 }: TiltWrapperProps) {
   const [rotation, setRotation] = useState({ x: 0, y: 0 })
   const container = useRef<HTMLDivElement | null>(null)
+
+  const springTransition = { type: "spring", bounce: 0.7, duration: 1 }
+  const tiltVariants = {
+    idle: {
+      scale: 1,
+      transition: springTransition,
+    },
+    tilt: {
+      rotateX: rotation.x,
+      rotateY: rotation.y,
+      scale: 1.1,
+      transition: {
+        scale: springTransition,
+        default: { type: "tween", ease: "easeOut", duration: 0.1 },
+      },
+    },
+  }
 
   const handleMouseMove = ({
     clientX: mouseX,
@@ -52,19 +70,17 @@ export function TiltWrapper({
   }
 
   return (
-    <Container
-      ref={container}
-      onMouseMove={e => handleMouseMove(e)}
-      onMouseLeave={() => setRotation({ x: 0, y: 0 })}
-      style={{
-        transform:
-          `perspective(${perspective}px) rotateX(${rotation.x}deg) ` +
-          `rotateY(${rotation.y}deg) scale(${
-            rotation.x + rotation.y ? 1.1 : 1
-          })`,
-      }}
-    >
-      {children}
-    </Container>
+    <div style={{ perspective: perspective }}>
+      <Container
+        ref={container}
+        onMouseMove={e => handleMouseMove(e)}
+        onMouseLeave={() => setRotation({ x: 0, y: 0 })}
+        animate={"idle"}
+        whileHover={"tilt"}
+        variants={tiltVariants}
+      >
+        {children}
+      </Container>
+    </div>
   )
 }

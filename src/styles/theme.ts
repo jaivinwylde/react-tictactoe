@@ -15,7 +15,7 @@ export const defaultTheme: DefaultTheme = {
       large: 64,
       medium: 48,
       small: 36,
-      extraSmall: 30,
+      extraSmall: 15,
     },
     button: {
       width: 100,

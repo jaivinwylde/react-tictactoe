@@ -1,5 +1,7 @@
-import { TiltWrapper } from "components"
+import { Button, TiltWrapper } from "components"
 import { Title } from "components"
+import { PopUp } from "components/PopUp"
+import { useState } from "react"
 import styled from "styled-components"
 
 import { GameBoard } from "../components"
@@ -20,7 +22,7 @@ const Container = styled.div`
 `
 
 export function Game() {
-  const { turn, moves, winner, gridSize } = useGame()
+  const { turn, moves, winner, gridSize, handleReset } = useGame()
 
   const renderInfoMessage = () => {
     if (winner) {
@@ -34,6 +36,17 @@ export function Game() {
 
   return (
     <Container>
+      <PopUp open={!!winner}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Title>{renderInfoMessage()}</Title>
+          <Button onClick={handleReset}>Restart the game</Button>
+        </div>
+      </PopUp>
       <Title>{renderInfoMessage()}</Title>
       <TiltWrapper>
         <GameBoard gridSize={gridSize} />

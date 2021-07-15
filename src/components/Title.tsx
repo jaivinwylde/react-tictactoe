@@ -4,10 +4,10 @@ const StyledTitle = styled.h1`
   font-weight: 600;
 `
 
-interface TitleType {
+interface TitleProps {
   children: React.ReactNode
 }
 
-export function Title({ children }: TitleType) {
+export function Title({ children }: TitleProps) {
   return <StyledTitle>{children}</StyledTitle>
 }

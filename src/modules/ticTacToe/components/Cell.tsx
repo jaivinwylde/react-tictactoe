@@ -17,7 +17,9 @@ const StyledCell = styled.button<StyledCellProps>`
   width: ${props => props.pixels}px;
   height: ${props => props.pixels}px;
   padding: 0;
+
   background-color: ${props => (props.isWinner ? "#6BC754" : "#202020")};
+  color: #fff;
 
   ${clickable}
 

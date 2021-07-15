@@ -10,6 +10,7 @@ interface ContextType {
   winner: string | null
   moves: number
   handleMove(cellId: number): void
+  handleReset(): void
 }
 
 const GameContext = createContext<ContextType>({
@@ -19,15 +20,16 @@ const GameContext = createContext<ContextType>({
   winner: null,
   moves: 0,
   handleMove: () => null,
+  handleReset: () => null,
 })
 
 export const useGame = () => useContext(GameContext)
 
-interface ProviderType {
+interface ProviderProps {
   children: React.ReactNode
 }
 
-export function GameProvider({ children }: ProviderType) {
+export function GameProvider({ children }: ProviderProps) {
   const gridSize = 3
 
   const [cells, setCells] = useState(generateBoard(gridSize))
@@ -106,9 +108,16 @@ export function GameProvider({ children }: ProviderType) {
     setCells(cells => ({ ...cells, [cellId]: newCell }))
   }
 
+  const handleReset = () => {
+    setCells(generateBoard(gridSize))
+    setTurn(true)
+    setWinner(null)
+    setMoves(0)
+  }
+
   return (
     <GameContext.Provider
-      value={{ turn, winner, moves, gridSize, cells, handleMove }}
+      value={{ turn, winner, moves, gridSize, cells, handleMove, handleReset }}
     >
       {children}
     </GameContext.Provider>

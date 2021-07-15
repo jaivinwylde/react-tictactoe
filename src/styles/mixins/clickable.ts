@@ -9,7 +9,6 @@ export const clickable = css<ClickableProps>`
   border: none;
   font-family: Lexend, sans-serif;
   font-weight: bold;
-  color: #fff;
 
   cursor: ${props => (props.disabled ? "not-allowed" : "pointer")};
 

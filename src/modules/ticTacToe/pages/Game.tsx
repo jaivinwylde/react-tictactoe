@@ -1,7 +1,7 @@
 import { Button, TiltWrapper } from "components"
 import { Title } from "components"
 import { PopUp } from "components/PopUp"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 
 import { GameBoard } from "../components"
@@ -23,11 +23,20 @@ const Container = styled.div`
 
 export function Game() {
   const { turn, moves, winner, gridSize, handleReset } = useGame()
+  const [isOver, setIsOver] = useState(false)
+
+  useEffect(() => {
+    setIsOver(!!winner)
+  }, [winner])
 
   const renderInfoMessage = () => {
     if (winner) {
       return `${winner} has won!`
     } else if (moves === gridSize * 3) {
+      if (!isOver) {
+        setIsOver(true)
+      }
+
       return "It's a tie!"
     } else {
       return `It's ${turn ? "X" : "O"}'s turn`
@@ -36,7 +45,7 @@ export function Game() {
 
   return (
     <Container>
-      <PopUp open={!!winner}>
+      <PopUp open={isOver}>
         <div
           style={{
             display: "flex",
@@ -44,7 +53,14 @@ export function Game() {
           }}
         >
           <Title>{renderInfoMessage()}</Title>
-          <Button onClick={handleReset}>Restart the game</Button>
+          <Button
+            onClick={() => {
+              setIsOver(false)
+              handleReset()
+            }}
+          >
+            Restart the game
+          </Button>
         </div>
       </PopUp>
       <Title>{renderInfoMessage()}</Title>

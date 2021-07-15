@@ -7,6 +7,7 @@ interface ClickableProps {
 export const clickable = css<ClickableProps>`
   outline: none;
   border: none;
+  font-family: Lexend, sans-serif;
   font-weight: bold;
   color: #fff;
 

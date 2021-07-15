@@ -11,8 +11,6 @@ export const clickable = css<ClickableProps>`
   font-weight: bold;
   color: #fff;
 
-  transition: background-color 100ms ease-in-out;
-
   cursor: ${props => (props.disabled ? "not-allowed" : "pointer")};
 
   &:hover:enabled {
@@ -20,5 +18,8 @@ export const clickable = css<ClickableProps>`
   }
   &:active {
     transform: scale(0.9);
+  }
+  &:not(:active) {
+    transition: background-color 100ms ease-in-out, transform 100ms ease-out;
   }
 `

@@ -1,4 +1,5 @@
 import { TiltWrapper } from "components"
+import { Title } from "components"
 import styled from "styled-components"
 
 import { GameBoard } from "../components"
@@ -33,7 +34,7 @@ export function Game() {
 
   return (
     <Container>
-      <h1>{renderInfoMessage()}</h1>
+      <Title>{renderInfoMessage()}</Title>
       <TiltWrapper>
         <GameBoard gridSize={gridSize} />
       </TiltWrapper>
